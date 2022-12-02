@@ -1,0 +1,32 @@
+<section class="recommended">
+  <div class="sub-heading">
+    <h2>{{ filter | titlecase }} Shows</h2>
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="totalResults"
+      [pageSize]="tvShows.length"
+      [hidePageSize]="hidePageSize"
+      [pageIndex]="pageIndex"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+  <div class="cards">
+    <div *ngFor="let item of tvShows" class="movie">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <img
+            [height]="height"
+            [width]="width"
+            mat-card-image
+            [src]="item.poster_path"
+            alt="Photo of a Shiba Inu"
+        /></mat-card-content>
+      </mat-card>
+      <p class="title">
+        <strong>{{ item.name }}</strong>
+      </p>
+      <p class="release-date">{{ item.first_air_date }}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+<header class="header">
+  <mat-toolbar class="toolbar">
+    <div class="inner-toolbar">
+      <div [routerLink]="['/movies']">
+        <img src="../../assets/images/video-camera (2).png" />
+        <span> <h2 style="padding-left: 8px">Movies</h2></span>
+      </div>
+      <button
+        mat-button
+        [matMenuTriggerFor]="movieMenu"
+        #movieMenuTrigger="matMenuTrigger"
+        (mouseenter)="buttonEnter(movieMenuTrigger)"
+        (mouseleave)="buttonLeave(movieMenuTrigger)"
+        class="btn"
+        style="margin-left: 12px; z-index: 1050"
+      >
+        Movies
+      </button>
+      <mat-menu
+        #movieMenu="matMenu"
+        [overlapTrigger]="false"
+        direction="down"
+        yPosition="below"
+      >
+        <span
+          (mouseenter)="menuenter()"
+          (mouseleave)="menuLeave(movieMenuTrigger)"
+        >
+          <button
+            mat-menu-item
+            [routerLink]="['/movie']"
+            [queryParams]="{ filter: 'popular' }"
+          >
+            <span>Popular</span>
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="['/movie']"
+            [queryParams]="{ filter: 'now-playing' }"
+          >
+            <span>Now Playing</span>
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="['/movie']"
+            [queryParams]="{ filter: 'upcoming' }"
+          >
+            <span>Upcoming</span>
+          </button>
+        </span>
+      </mat-menu>
+      <button
+        mat-button
+        [matMenuTriggerFor]="tvmenu"
+        #tvmenuTrigger="matMenuTrigger"
+        (mouseenter)="buttonEnter(tvmenuTrigger)"
+        (mouseleave)="buttonLeave(tvmenuTrigger)"
+        class="btn"
+        style="margin-left: 12px; z-index: 1050"
+      >
+        TV Shows
+      </button>
+      <mat-menu
+        #tvmenu="matMenu"
+        [overlapTrigger]="false"
+        direction="down"
+        yPosition="below"
+      >
+        <span
+          (mouseenter)="menuenter()"
+          (mouseleave)="menuLeave(tvmenuTrigger)"
+        >
+          <button
+            mat-menu-item
+            [routerLink]="['/tv-show']"
+            [queryParams]="{ filter: 'popular' }"
+          >
+            <span>Popular</span>
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="['/tv-show']"
+            [queryParams]="{ filter: 'airing Today' }"
+          >
+            <span>Airing Today</span>
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="['/tv-show']"
+            [queryParams]="{ filter: 'on TV' }"
+          >
+            <span>On TV</span>
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="['/tv-show']"
+            [queryParams]="{ filter: 'top Rated' }"
+          >
+            <span>Top Rated</span>
+          </button>
+        </span>
+      </mat-menu>
+      <span class="example-spacer"></span>
+      <button
+        mat-icon-button
+        class="example-icon search-btn"
+        aria-label="Example icon-button with search icon"
+        (click)="search = !search"
+      >
+        <mat-icon [ngClass]="{ 'icon-search': !search }">{{
+          search ? "close" : "search"
+        }}</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  <section class="search" [ngStyle]="{ display: search ? 'block' : 'none' }">
+    <div class="form">
+      <!-- <form > -->
+      <mat-form-field appearance="outline" class="form-field">
+        <input
+          matInput
+          placeholder="Search for a movie, tv show, person..."
+          #searchInput
+          (keydown.enter)="onKeydown($event)"
+        />
+        <span matPrefix><mat-icon>search</mat-icon></span>
+        <!-- <mat-icon mat-icon-button matSuffix>close</mat-icon> -->
+      </mat-form-field>
+      <!-- </form> -->
+    </div>
+  </section>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

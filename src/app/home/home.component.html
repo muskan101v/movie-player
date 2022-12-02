@@ -1,0 +1,25 @@
+<div class="container">
+  <h3>Select the Genres that you are interested in</h3>
+  <mat-chip-list
+    aria-label="genres selection"
+    role="listbox"
+    #chipList
+    multiple="true"
+  >
+    <mat-chip
+      class="btn-chip"
+      *ngFor="let genre of genres | async"
+      role="option"
+      [value]="genre"
+      [ngClass]="{ selection: genre.selected }"
+      [selected]="genre.selected"
+      (selectionChange)="changeSelected($event, genre)"
+      (click)="genre.selected = !genre.selected"
+    >
+      {{ genre.name }}
+    </mat-chip>
+  </mat-chip-list>
+  <button mat-raised-button class="select-btn" (click)="getSelectedChips()">
+    Get Selected Chips
+  </button>
+</div>

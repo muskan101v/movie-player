@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+  color: inherit;
+  margin: 0px;
+}
+:host {
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  margin: 0px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 8px 0;
+}
+
+p {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0 0 !important;
+}
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.mat-form-field-outline-start,
+.mat-form-field-outline-end {
+  border-radius: 0 !important;
+  opacity: 0;
+}
+.mat-input-element,
+::placeholder {
+  font-family: Arial, sans-serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: #acacac;
+  padding-left: 8px;
+}
