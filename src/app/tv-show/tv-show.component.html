@@ -1,10 +1,13 @@
-<section class="recommended">
+<section class="not-found" *ngIf="tvShows?.length == 0">
+  <p>Shows Not found {{ filter }}</p>
+</section>
+<section class="recommended" *ngIf="tvShows?.length !== 0">
   <div class="sub-heading">
     <h2>{{ filter | titlecase }} Shows</h2>
     <mat-paginator
       (page)="handlePageEvent($event)"
       [length]="totalResults"
-      [pageSize]="tvShows.length"
+      [pageSize]="tvShows?.length"
       [hidePageSize]="hidePageSize"
       [pageIndex]="pageIndex"
       aria-label="Select page"

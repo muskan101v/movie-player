@@ -1,5 +1,5 @@
-<section class="not-found">
-  <h2>No found {{ query }}</h2>
+<section class="not-found" *ngIf="data?.length == 0">
+  <p>Not found {{ query }}</p>
 </section>
 <section class="recommended" *ngIf="data?.length != 0">
   <div class="sub-heading">

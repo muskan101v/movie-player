@@ -1,4 +1,7 @@
-<section class="recommended">
+<section class="not-found" *ngIf="movie?.length == 0">
+  <p>Movies Not found {{ filter }}</p>
+</section>
+<section class="recommended" *ngIf="movie?.length !== 0">
   <div class="sub-heading">
     <h2>{{ filter | titlecase }} Movies</h2>
     <mat-paginator

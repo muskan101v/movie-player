@@ -29,7 +29,7 @@ export class TvShowComponent implements OnInit {
   ngOnInit(): void {
     this.activateRoute.queryParamMap.subscribe((res: any) => {
       this.filter = res.params.filter;
-      this.filterShow(this.filter);
+      this.filterShow(this.filter, 1);
       // console.log(this.filter);
     });
   }
@@ -37,20 +37,7 @@ export class TvShowComponent implements OnInit {
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.pageIndex = e.pageIndex;
-    switch (this.filter) {
-      case 'popular':
-        this.getShows(this.pageIndex + 1, 'popular');
-        break;
-      case 'airing Today':
-        this.getShows(this.pageIndex + 1, 'airing_today');
-        break;
-      case 'on TV':
-        this.getShows(this.pageIndex + 1, 'on_the_air');
-        break;
-      case 'top Rated':
-        this.getShows(this.pageIndex + 1, 'top_rated');
-        break;
-    }
+    this.filterShow(this.filter, this.pageIndex + 1);
   }
 
   getShows(page: number, showType: string) {
@@ -61,19 +48,19 @@ export class TvShowComponent implements OnInit {
     });
   }
 
-  filterShow(filter: string) {
+  filterShow(filter: string, page: number) {
     switch (filter) {
       case 'popular':
-        this.getShows(1, 'popular');
+        this.getShows(page, 'popular');
         break;
       case 'airing Today':
-        this.getShows(1, 'airing_today');
+        this.getShows(page, 'airing_today');
         break;
       case 'on TV':
-        this.getShows(1, 'on_the_air');
+        this.getShows(page, 'on_the_air');
         break;
       case 'top Rated':
-        this.getShows(1, 'top_rated');
+        this.getShows(page, 'top_rated');
         break;
     }
   }
