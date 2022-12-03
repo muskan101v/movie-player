@@ -1,7 +1,7 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { map } from 'rxjs';
 import { MaterialModule } from '../material/material.module';
 import { CookiesService } from '../services/cookies.service';
@@ -34,8 +34,8 @@ export class MovieComponent implements OnInit {
 
   ngOnInit(): void {
     this.getcookies = this.cookiesService.getcookies('genres');
-    this.activateRoute.queryParamMap.subscribe((res: any) => {
-      this.filter = res.params.filter;
+    this.activateRoute.queryParamMap.subscribe((res: Params) => {
+      this.filter = res?.['params'].filter;
       // console.log(this.filter);
       this.filterMovie(this.filter, 1);
     });

@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { map, Observable, shareReplay, tap } from 'rxjs';
 import { MaterialModule } from '../material/material.module';
+import { ApiResponse, Shows } from '../models/models';
 import { MovieService } from '../services/movie.service';
 
 @Component({
@@ -18,21 +19,21 @@ export class SearchComponent implements OnInit {
     private readonly activateRoute: ActivatedRoute,
     private readonly movieService: MovieService
   ) {}
-  allShows!: Observable<any>;
-  tvShow!: Observable<any>;
-  movies!: Observable<any>;
+  allShows!: Observable<ApiResponse>;
+  tvShow!: Observable<number>;
+  movies!: Observable<number>;
   query!: string;
-  totalResults: number = 0;
+  totalResults = 0;
   pageEvent!: PageEvent;
   hidePageSize = true;
   pageIndex = 0;
   height = 200;
   width = 250;
-  data: any;
+  data!: Shows[];
   ngOnInit(): void {
     this.activateRoute.queryParamMap.subscribe({
       next: (res: Params) => {
-        console.log(res?.['params']?.query);
+        // console.log(res?.['params']?.query);
         this.query = res?.['params']?.query;
         this.searchShow(this.query, 1);
       },
@@ -56,25 +57,27 @@ export class SearchComponent implements OnInit {
     this.allShows.subscribe((res) => {
       this.totalResults = res.total_results;
       this.data = res.results.filter(
-        (res: any) => res.media_type == 'tv' || res.media_type == 'movie'
+        (res: Shows) =>
+          // console.log(res);
+          res.media_type == 'tv' || res.media_type == 'movie'
       );
     });
 
     this.tvShow = this.allShows.pipe(
-      map((res: any) => res.results),
-      map((res) => res.filter((res: any) => res.media_type == 'tv')),
-      map((res) => res.length),
-      tap((res: any) => {
-        console.log(res);
-      })
+      map((res: ApiResponse) => res.results),
+      map((res) => res.filter((res: Shows) => res.media_type == 'tv')),
+      map((res) => res.length)
+      // tap((res: any) => {
+      //   console.log(res);
+      // })
     );
     this.movies = this.allShows.pipe(
-      map((res: any) => res.results),
-      map((res) => res.filter((res: any) => res.media_type == 'movie')),
-      map((res) => res.length),
-      tap((res: any) => {
-        console.log(res);
-      })
+      map((res: ApiResponse) => res.results),
+      map((res) => res.filter((res: Shows) => res.media_type == 'movie')),
+      map((res) => res.length)
+      // tap((res: any) => {
+      //   console.log(res);
+      // })
     );
   }
 }

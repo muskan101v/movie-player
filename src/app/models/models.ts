@@ -8,7 +8,7 @@ export interface ApiResponse {
   page?: number;
   results: Shows[];
   total_pages?: number;
-  total_results?: number;
+  total_results: number;
 }
 
 export interface Date {
@@ -43,4 +43,5 @@ export interface Shows {
   release_date?: string;
   title?: string;
   video?: boolean;
+  media_type?: string;
 }
