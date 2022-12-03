@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatChipList } from '@angular/material/chips';
 import { Router } from '@angular/router';
 import { map, Observable, tap } from 'rxjs';
-import { CookiesService } from '../Service/cookies.service';
-import { MovieService } from '../Service/movie.service';
+import { GenreDetails, Genres } from '../models/models';
+import { CookiesService } from '../services/cookies.service';
+import { MovieService } from '../services/movie.service';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
     private readonly cookieService: CookiesService,
     private readonly router: Router
   ) {}
-  genres: Observable<any> | undefined;
+  genres: Observable<GenreDetails[]> | undefined;
 
   ngOnInit(): void {
     this.getGenres();
@@ -25,8 +26,8 @@ export class HomeComponent implements OnInit {
 
   getGenres() {
     this.genres = this.movieService.getGenres().pipe(
-      map((res: any) => {
-        let genres = res.genres.map((data: any) => {
+      map((res: Genres) => {
+        let genres = res?.genres?.map((data: GenreDetails) => {
           data['selected'] = false;
           return data;
         });
@@ -36,7 +37,6 @@ export class HomeComponent implements OnInit {
   }
 
   getSelectedChips() {
-    // console.log(this.chipList.selected);
     let arr = Object.values(this.chipList.selected).map((res) => {
       return res['_value']['id'];
     });
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/movies']);
   }
 
-  changeSelected(event: any, genre: any): void {
+  changeSelected(event: any, genre: GenreDetails): void {
     genre.selected = event.selected;
   }
 }

@@ -4,7 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { map, Observable, shareReplay, tap } from 'rxjs';
 import { MaterialModule } from '../material/material.module';
-import { MovieService } from '../Service/movie.service';
+import { MovieService } from '../services/movie.service';
 
 @Component({
   selector: 'app-search',

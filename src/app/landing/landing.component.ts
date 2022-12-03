@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { concatMap, forkJoin, from, map, Observable, take } from 'rxjs';
-import { MovieService } from '../Service/movie.service';
-import { slider, Movie } from '../models/models';
+import { MovieService } from '../services/movie.service';
+import { Shows, slider } from '../models/models';
 import { Router } from '@angular/router';
-import { CookiesService } from '../Service/cookies.service';
+import { CookiesService } from '../services/cookies.service';
 import { environment as env } from 'src/environments/environment';
 
 @Component({
@@ -17,10 +17,10 @@ export class LandingComponent implements OnInit {
     private readonly router: Router,
     private readonly cookiesService: CookiesService
   ) {}
-  upcomingMovie!: Observable<any>;
-  imageObject: Array<any> = [];
-  movie: Array<Movie> = [];
-  latestmovie: Array<any> = [];
+  // upcomingMovie!: Observable<any>;
+  imageObject: Array<slider> = [];
+  recommendedMovie: Array<Shows> = [];
+  latestmovie: Array<Shows> | undefined = [];
 
   ngOnInit(): void {
     let getcookies = this.cookiesService.getcookies('genres');
@@ -35,30 +35,32 @@ export class LandingComponent implements OnInit {
       with_watch_monetization_types: 'flatrate',
       with_genres: getcookies,
     };
+
     forkJoin([
       this.movieService.upcommingMovies(),
       this.movieService.dicoverMovie(payload),
       this.movieService.getMovies(1, 'top_rated'),
     ]).subscribe({
       next: ([upcomingMovie, recommendedMovie, latestmovie]) => {
+        console.log(upcomingMovie);
+        this.imageObject = upcomingMovie;
+        this.recommendedMovie = recommendedMovie.results;
+        this.latestmovie = latestmovie?.results;
         // console.log(upcomingMovie);
-        upcomingMovie.subscribe((data) => {
-          this.imageObject.push(data);
-          console.log(this.imageObject);
-        });
-        this.movie = recommendedMovie.results;
-        this.latestmovie = latestmovie.results;
+        // upcomingMovie.subscribe((data) => {
+        //   this.imageObject.push(data);
+        //   console.log(this.imageObject);
+        // });
       },
     });
   }
 
   // upcomingmovie() {
-
-  //     .subscribe({
-  //       next: (res: any) => {
-  //         this.imageObject.push(res);
-  //       },
-  //     });
+  //   this.movieService.upcommingMovies().subscribe({
+  //     next: (res: any) => {
+  //       // this.imageObject.push(res);
+  //     },
+  //   });
   // }
 
   onView(movie: string) {

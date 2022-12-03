@@ -7,7 +7,7 @@
     <mat-paginator
       (page)="handlePageEvent($event)"
       [length]="totalResults"
-      [pageSize]="movie.length"
+      [pageSize]="movie?.length"
       [hidePageSize]="hidePageSize"
       [pageIndex]="pageIndex"
       aria-label="Select page"

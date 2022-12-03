@@ -1,9 +1,10 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
-import { TvShowService } from '../Service/tv-show.service';
+import { ApiResponse, Shows } from '../models/models';
+import { TvShowService } from '../services/tv-show.service';
 
 @Component({
   selector: 'app-tv-show',
@@ -19,16 +20,16 @@ export class TvShowComponent implements OnInit {
   ) {}
   height = 200;
   width = 200;
-  tvShows: Array<any> = [];
-  totalResults!: number;
+  tvShows: Array<Shows> | undefined = [];
+  totalResults!: number | undefined;
   pageEvent!: PageEvent;
   hidePageSize = true;
   pageIndex = 0;
   filter!: string;
 
   ngOnInit(): void {
-    this.activateRoute.queryParamMap.subscribe((res: any) => {
-      this.filter = res.params.filter;
+    this.activateRoute.queryParamMap.subscribe((param: Params) => {
+      this.filter = param?.['params']?.filter;
       this.filterShow(this.filter, 1);
       // console.log(this.filter);
     });
@@ -41,10 +42,9 @@ export class TvShowComponent implements OnInit {
   }
 
   getShows(page: number, showType: string) {
-    this.showService.getShows(page, showType).subscribe((res) => {
-      // console.log(res);
-      this.totalResults = res.total_results;
-      this.tvShows = res.results;
+    this.showService.getShows(page, showType).subscribe((res: ApiResponse) => {
+      this.totalResults = res?.total_results;
+      this.tvShows = res?.results;
     });
   }
 

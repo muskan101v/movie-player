@@ -14,7 +14,7 @@ import {
   of,
   switchMap,
 } from 'rxjs';
-import { MovieService } from '../Service/movie.service';
+import { MovieService } from '../services/movie.service';
 
 @Component({
   selector: 'app-header',
@@ -109,9 +109,11 @@ export class HeaderComponent implements OnInit {
 
   onKeydown(event: any) {
     if (event.key === 'Enter') {
-      this.router.navigate(['/search'], {
-        queryParams: { query: this.searchInput?.nativeElement.value },
-      });
+      if (this.searchInput.nativeElement.value) {
+        this.router.navigate(['/search'], {
+          queryParams: { query: this.searchInput?.nativeElement.value },
+        });
+      }
     }
   }
 }

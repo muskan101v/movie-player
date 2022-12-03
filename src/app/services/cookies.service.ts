@@ -7,14 +7,14 @@ import { CookieService } from 'ngx-cookie-service';
 export class CookiesService {
   constructor(private readonly cookieService: CookieService) {}
 
-  setCookies(key: string, data: string) {
+  setCookies(key: string, data: string): void {
     this.cookieService.set(key, data);
   }
 
   checkCookies(key: string): boolean {
     return this.cookieService.check(key);
   }
-  getcookies(key: string) {
+  getcookies(key: string): string {
     return this.cookieService.get(key);
   }
 }

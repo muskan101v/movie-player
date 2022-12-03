@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
+import { ApiResponse, Shows } from '../models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +10,9 @@ import { environment as env } from 'src/environments/environment';
 export class TvShowService {
   constructor(private readonly http: HttpClient) {}
 
-  getShows(page: number, showType: string) {
+  getShows(page: number, showType: string): Observable<ApiResponse> {
     return this.http
-      .get(`https://api.themoviedb.org/3/tv/${showType}`, {
+      .get<ApiResponse>(`https://api.themoviedb.org/3/tv/${showType}`, {
         params: {
           api_key: env.apiKey,
           language: 'en - US',
@@ -19,8 +20,11 @@ export class TvShowService {
         },
       })
       .pipe(
-        map((res: any) => {
-          res.results.map((res: any) => {
+        tap((res: ApiResponse) => {
+          console.log(res);
+        }),
+        map((res: ApiResponse) => {
+          res.results?.map((res: Shows) => {
             if (!res['backdrop_path']) {
               res['backdrop_path'] = `../../assets/images/backdrop.jpeg`;
             } else {

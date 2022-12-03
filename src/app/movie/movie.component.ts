@@ -1,13 +1,13 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { MaterialModule } from '../material/material.module';
-import { Movie } from '../models/models';
-import { CookiesService } from '../Service/cookies.service';
-import { MovieService } from '../Service/movie.service';
+import { CookiesService } from '../services/cookies.service';
+import { MovieService } from '../services/movie.service';
 import { environment as env } from 'src/environments/environment';
+import { ApiResponse, Shows } from '../models/models';
 
 @Component({
   selector: 'app-movie',
@@ -24,8 +24,8 @@ export class MovieComponent implements OnInit {
   ) {}
   height = 200;
   width = 250;
-  movie: Array<Movie> = [];
-  totalResults!: number;
+  movie: Array<Shows> | undefined = [];
+  totalResults!: number | undefined;
   getcookies!: string;
   pageEvent!: PageEvent;
   hidePageSize = true;
@@ -66,11 +66,13 @@ export class MovieComponent implements OnInit {
   }
 
   getMovies(page: number, movieType: string) {
-    this.movieService.getMovies(page, movieType).subscribe((res) => {
-      // console.log(res);
-      this.totalResults = res.total_results;
-      this.movie = res.results;
-    });
+    this.movieService
+      .getMovies(page, movieType)
+      .subscribe((res: ApiResponse) => {
+        // console.log(res);
+        this.totalResults = res.total_results;
+        this.movie = res.results;
+      });
   }
 
   filterMovie(filter: string, page: number) {
