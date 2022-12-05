@@ -1,5 +1,12 @@
 # MoviePlayer
 
+This project is based on Anhgular 14 , Rxjs operators.
+
+All the upcoming Movies, Recommended movies  according to the select genres by user, Top rated movies , and TV shows (Popular shows , Now playing shows, Airing today, Top Rated shows) are render on the User Interface.
+
+<img width="1788" alt="Screenshot 2022-12-05 at 7 05 44 PM" src="https://user-images.githubusercontent.com/78101770/205650631-9e55457c-04b0-472c-97cf-cf8ad84114a0.png">
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
 
 ## Development server
